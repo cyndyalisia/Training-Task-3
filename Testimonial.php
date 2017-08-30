@@ -7,7 +7,7 @@ Author: Cyndy Alisia Lumban Gaol
 Author URI: https://www.facebook.com/cindy.alisia
 */
   $IDbase = 0;
-  global $blog_id;
+  $blog_id = get_current_blog_id();
 
     function html_form_code() {
     	echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
@@ -39,7 +39,7 @@ function deliver_mail() {
         $email   = sanitize_email( $_POST["cf-email"] );
         $phone = sanitize_text_field( $_POST["cf-phone"] );
         $testimonial = esc_textarea( $_POST["cf-testimonial"] );
-        $blog_id = get_site_url();
+      //  $blog_id = get_site_url();
 
         $GLOBALS['wpdb']->insert(
         	'wordpress',
@@ -75,7 +75,7 @@ function myplguin_admin_page(){
 ?>
 	<div class="wrap">
     <h2>Admin Page</h2>
-
+      <?php echo $blog_id;?>
       <table class="table" border="1">
         <tr>
           <th>ID</th>
@@ -135,7 +135,7 @@ class Testimonial_Widget extends WP_Widget {
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
-    $blog_id = get_site_url();
+    //$blog_id = get_site_url();
     global $wpdb;
     $mylink =$wpdb->get_row("SELECT testimonial FROM wordpress WHERE blog_id = '$blog_id' ORDER BY RAND() LIMIT 1");
 
