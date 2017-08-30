@@ -7,7 +7,7 @@ Author: Cyndy Alisia Lumban Gaol
 Author URI: https://www.facebook.com/cindy.alisia
 */
   $IDbase = 0;
-  $blog_id = get_current_blog_id();
+  //$blog_id = get_current_blog_id();
 
     function html_form_code() {
     	echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
@@ -39,6 +39,7 @@ function deliver_mail() {
         $email   = sanitize_email( $_POST["cf-email"] );
         $phone = sanitize_text_field( $_POST["cf-phone"] );
         $testimonial = esc_textarea( $_POST["cf-testimonial"] );
+        $blog_id = get_current_blog_id();
       //  $blog_id = get_site_url();
 
         $GLOBALS['wpdb']->insert(
@@ -48,7 +49,8 @@ function deliver_mail() {
         		'name' => $name,
         		'email' => $email,
             'phone_number' => $phone,
-            'testimonial' => $testimonial
+            'testimonial' => $testimonial,
+            'blog_id' => $blog_id
   	       )
          );
     }
@@ -71,11 +73,10 @@ function my_admin_menu() {
 add_action( 'admin_menu', 'my_admin_menu' );
 
 function myplguin_admin_page(){
-  $blog_id = get_site_url();
+  $blog_id = get_current_blog_id();
 ?>
 	<div class="wrap">
     <h2>Admin Page</h2>
-      <?php echo $blog_id;?>
       <table class="table" border="1">
         <tr>
           <th>ID</th>
